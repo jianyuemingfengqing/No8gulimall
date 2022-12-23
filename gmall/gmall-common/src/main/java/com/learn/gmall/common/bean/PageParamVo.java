@@ -1,4 +1,4 @@
-package com.atguigu.gmall.common.bean;
+package com.learn.gmall.common.bean;
 
 
 import com.baomidou.mybatisplus.core.metadata.IPage;

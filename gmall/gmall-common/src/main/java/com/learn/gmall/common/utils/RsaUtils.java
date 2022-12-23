@@ -1,4 +1,4 @@
-package com.atguigu.gmall.common.utils;
+package com.learn.gmall.common.utils;
 
 import java.io.File;
 import java.io.IOException;

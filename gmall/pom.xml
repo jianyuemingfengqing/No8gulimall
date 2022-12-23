@@ -24,6 +24,7 @@
         <module>gmall-wms</module>
         <module>gmall-ums</module>
         <module>gmall-oms</module>
+        <module>gmall-gateway</module>
     </modules>
 
     <properties>
@@ -49,7 +50,11 @@
                 <type>pom</type>
                 <scope>import</scope>
             </dependency>
-
+            <dependency>
+                <groupId>com.github.xiaoymin</groupId>
+                <artifactId>swagger-bootstrap-ui</artifactId>
+                <version>1.9.2</version>
+            </dependency>
             <dependency>
                 <groupId>com.alibaba.cloud</groupId>
                 <artifactId>spring-cloud-alibaba-dependencies</artifactId>

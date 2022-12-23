@@ -7,13 +7,13 @@ import org.springframework.cloud.openfeign.EnableFeignClients;
 import springfox.documentation.swagger2.annotations.EnableSwagger2;
 
 @SpringBootApplication
-@EnableSwagger2
+//@EnableSwagger2
 @EnableFeignClients
 @MapperScan("com.learn.gmall.pms.mapper")
-public class GmailPmsApplication {
+public class GmallPmsApplication {
 
     public static void main(String[] args) {
-        SpringApplication.run(GmailPmsApplication.class, args);
+        SpringApplication.run(GmallPmsApplication.class, args);
     }
 
 }

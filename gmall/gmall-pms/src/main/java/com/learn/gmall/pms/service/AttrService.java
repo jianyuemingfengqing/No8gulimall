@@ -1,11 +1,9 @@
 package com.learn.gmall.pms.service;
 
-import com.baomidou.mybatisplus.extension.service.IService;
-import com.learn.gmall.common.bean.PageResultVo;
 import com.learn.gmall.common.bean.PageParamVo;
+import com.learn.gmall.common.bean.PageResultVo;
+import com.baomidou.mybatisplus.extension.service.IService;
 import com.learn.gmall.pms.entity.AttrEntity;
-
-import java.util.Map;
 
 /**
  * 商品属性

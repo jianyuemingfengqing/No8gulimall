@@ -1,4 +1,4 @@
-package com.atguigu.gmall.common.utils;
+package com.learn.gmall.common.utils;
 
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.server.reactive.ServerHttpRequest;

@@ -11,7 +11,7 @@ spring:
         port: 8719
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://localhost:3306/wuli_ums?useUnicode=true&characterEncoding=UTF-8&useSSL=false
+    url: jdbc:mysql://localhost:3306/guli_wms?useUnicode=true&characterEncoding=UTF-8&useSSL=false
     username: root
     password: root
   redis:
