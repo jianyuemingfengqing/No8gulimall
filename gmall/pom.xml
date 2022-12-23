@@ -23,6 +23,7 @@
         <module>gmall-pms</module>
         <module>gmall-wms</module>
         <module>gmall-ums</module>
+        <module>gmall-oms</module>
     </modules>
 
     <properties>
