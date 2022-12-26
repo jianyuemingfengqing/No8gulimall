@@ -2,6 +2,8 @@ package com.learn.gmall.pms.controller;
 
 import java.util.List;
 
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.learn.gmall.pms.entity.AttrGroupEntity;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -45,6 +47,14 @@ public class AttrController {
         return ResponseVo.ok(pageResultVo);
     }
 
+    @GetMapping("group/{gid}")
+    @ApiOperation("查询组下的规格参数")
+    public ResponseVo<List<AttrEntity>> queryAttrsByGid(@PathVariable("gid") Long gid) {
+        List<AttrEntity> attrEntityList = attrService.list(
+                new QueryWrapper<AttrEntity>().eq("group_id", gid)
+        );
+        return ResponseVo.ok(attrEntityList);
+    }
 
     /**
      * 信息
