@@ -4,7 +4,9 @@ import com.baomidou.mybatisplus.extension.service.IService;
 import com.learn.gmall.common.bean.PageResultVo;
 import com.learn.gmall.common.bean.PageParamVo;
 import com.learn.gmall.pms.entity.AttrGroupEntity;
+import com.learn.gmall.pms.vo.GroupVo;
 
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -17,5 +19,7 @@ import java.util.Map;
 public interface AttrGroupService extends IService<AttrGroupEntity> {
 
     PageResultVo queryPage(PageParamVo paramVo);
+
+    List<GroupVo> queryByCid(Long cid);
 }
 

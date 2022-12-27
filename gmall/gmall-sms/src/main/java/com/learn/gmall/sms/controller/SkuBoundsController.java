@@ -2,6 +2,7 @@ package com.learn.gmall.sms.controller;
 
 import java.util.List;
 
+import com.learn.gmall.sms.vo.SkuSaleVo;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -88,6 +89,13 @@ public class SkuBoundsController {
 		skuBoundsService.removeByIds(ids);
 
         return ResponseVo.ok();
+    }
+    @ApiOperation("新增sku的营销信息")
+    @PostMapping("/skusale/save")
+    public ResponseVo<Object> saveSkuSaleInfo(@RequestBody SkuSaleVo skuSaleVo){
+        this.skuBoundsService.saveSkuSaleInfo(skuSaleVo);
+
+        return ResponseVo.ok(null);
     }
 
 }

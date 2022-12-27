@@ -6,11 +6,13 @@ import com.learn.gmall.common.bean.PageResultVo;
 import com.learn.gmall.common.bean.ResponseVo;
 import com.learn.gmall.pms.entity.AttrGroupEntity;
 import com.learn.gmall.pms.service.AttrGroupService;
+import com.learn.gmall.pms.vo.GroupVo;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import javax.annotation.Resource;
 import java.util.List;
 
 /**
@@ -25,9 +27,15 @@ import java.util.List;
 @RequestMapping("pms/attrgroup")
 public class AttrGroupController {
 
-    @Autowired
+    @Resource
     private AttrGroupService attrGroupService;
 
+    @GetMapping("withattrs/{catId}")
+    @ApiOperation("查询分类下的组及规格参数")
+    public ResponseVo<List<GroupVo>> queryByCid(@PathVariable("catId") Long cid) {
+        List<GroupVo> groupVoList = attrGroupService.queryByCid(cid);
+        return ResponseVo.ok(groupVoList);
+    }
     /**
      * 列表
      */
