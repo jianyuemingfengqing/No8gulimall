@@ -6,10 +6,12 @@ import com.baomidou.mybatisplus.core.toolkit.CollectionUtils;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.learn.gmall.common.bean.PageParamVo;
 import com.learn.gmall.common.bean.PageResultVo;
-import com.learn.gmall.pms.entity.*;
+import com.learn.gmall.pms.entity.SkuAttrValueEntity;
+import com.learn.gmall.pms.entity.SkuImagesEntity;
+import com.learn.gmall.pms.entity.SpuAttrValueEntity;
+import com.learn.gmall.pms.entity.SpuEntity;
 import com.learn.gmall.pms.feign.GmallSmsClient;
 import com.learn.gmall.pms.mapper.SkuMapper;
-import com.learn.gmall.pms.mapper.SpuDescMapper;
 import com.learn.gmall.pms.mapper.SpuMapper;
 import com.learn.gmall.pms.service.*;
 import com.learn.gmall.pms.vo.SkuVo;
@@ -19,6 +21,7 @@ import com.learn.gmall.sms.vo.SkuSaleVo;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
 import java.util.Date;
@@ -42,6 +45,7 @@ public class SpuServiceImpl extends ServiceImpl<SpuMapper, SpuEntity> implements
 
     @Resource
     private SpuDescService descService;
+
     @Override
     public PageResultVo queryPage(PageParamVo paramVo) {
         IPage<SpuEntity> page = this.page(
@@ -77,6 +81,7 @@ public class SpuServiceImpl extends ServiceImpl<SpuMapper, SpuEntity> implements
     }
 
     @Override
+    @Transactional
     public void bigSave(SpuVo spuVo) {
         //1. 保存 spu
         saveSpuInfo(spuVo);
@@ -85,6 +90,7 @@ public class SpuServiceImpl extends ServiceImpl<SpuMapper, SpuEntity> implements
         // 1.2. 保存pms_spu_desc
 
         descService.saveSpuDesc(spuVo, spuId);
+//        int i = 1 / 0; // 定义异常, 使事务出现回滚
 
         // 1.3. 保存pms_spu_attr_value
         saveBaseAttr(spuVo, spuId);

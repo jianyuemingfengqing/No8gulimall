@@ -16,6 +16,8 @@ import com.learn.gmall.common.bean.PageParamVo;
 import com.learn.gmall.pms.mapper.SpuDescMapper;
 import com.learn.gmall.pms.entity.SpuDescEntity;
 import com.learn.gmall.pms.service.SpuDescService;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 
 
 @Service("spuDescService")
@@ -32,6 +34,8 @@ public class SpuDescServiceImpl extends ServiceImpl<SpuDescMapper, SpuDescEntity
     }
 
     @Override
+    @Transactional(propagation = Propagation.REQUIRES_NEW)
+    //使用事务 需要由service调用, 所以将方法移到这里
     public void saveSpuDesc(SpuVo spuVo, Long spuId) {
         List<String> spuImages = spuVo.getSpuImages();
         if (!CollectionUtils.isEmpty(spuImages)) {

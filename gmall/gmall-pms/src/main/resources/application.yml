@@ -34,3 +34,7 @@ mybatis-plus:
 feign:
   sentinel:
     enabled: true
+
+logging:
+  level:
+    org.springframework: debug #提升范围, 为了看到事务创建
