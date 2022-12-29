@@ -15,13 +15,12 @@ import com.learn.gmall.pms.service.SkuAttrValueService;
 import com.learn.gmall.pms.service.SkuImagesService;
 import com.learn.gmall.pms.service.SpuAttrValueService;
 import com.learn.gmall.pms.service.SpuService;
-import com.learn.gmall.pms.vo.SkuSaleVo;
 import com.learn.gmall.pms.vo.SkuVo;
 import com.learn.gmall.pms.vo.SpuAttrValueVo;
 import com.learn.gmall.pms.vo.SpuVo;
+import com.learn.gmall.sms.vo.SkuSaleVo;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.BeanUtils;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
@@ -82,13 +81,22 @@ public class SpuServiceImpl extends ServiceImpl<SpuMapper, SpuEntity> implements
     @Override
     public void bigSave(SpuVo spuVo) {
         //1. 保存 spu
-        spuVo.setCreateTime(new Date());
-        spuVo.setUpdateTime(spuVo.getCreateTime());
-        this.save(spuVo);
-        Long spuId = spuVo.getId(); // 获取新增后的spuId
+
+        Long spuId = saveSpuInfo(spuVo);// 获取新增后的spuId
 
         // 1.2. 保存pms_spu_desc
+        saveSpuDesc(spuVo);
 
+        // 1.3. 保存pms_spu_attr_value
+        saveBaseAttr(spuVo, spuId);
+
+
+        //2.保存sku
+        saveSkuInfo(spuVo, spuId);
+
+    }
+
+    private void saveSpuDesc(SpuVo spuVo) {
         List<String> spuImages = spuVo.getSpuImages();
         if (!CollectionUtils.isEmpty(spuImages)) {
             SpuDescEntity spuDescEntity = new SpuDescEntity();
@@ -96,23 +104,9 @@ public class SpuServiceImpl extends ServiceImpl<SpuMapper, SpuEntity> implements
             spuDescEntity.setDecript(StringUtils.join(spuVo.getSpuImages(), ","));
             this.descMapper.insert(spuDescEntity);
         }
+    }
 
-        // 1.3. 保存pms_spu_attr_value
-        List<SpuAttrValueVo> baseAttrs = spuVo.getBaseAttrs();
-        if (!CollectionUtils.isEmpty(baseAttrs)) {
-            this.baseService.saveBatch(
-                    baseAttrs.stream().map(
-                            spuAttrValueVo -> {
-                                SpuAttrValueEntity spuAttrValueEntity = new SpuAttrValueEntity();
-                                BeanUtils.copyProperties(spuAttrValueVo, spuAttrValueEntity);
-                                spuAttrValueEntity.setSpuId(spuId);
-                                return spuAttrValueEntity;
-                            }
-                    ).collect(Collectors.toList())
-            );
-        }
-
-        //2.保存sku
+    private void saveSkuInfo(SpuVo spuVo, Long spuId) {
         List<SkuVo> skuVos = spuVo.getSkus();
         if (!CollectionUtils.isEmpty(skuVos)) {
             return;
@@ -165,7 +159,29 @@ public class SpuServiceImpl extends ServiceImpl<SpuMapper, SpuEntity> implements
             skuSaleVo.setSkuId(skuId);
             this.smsClient.saveSkuSaleInfo(skuSaleVo);
         });
+    }
 
+    private void saveBaseAttr(SpuVo spuVo, Long spuId) {
+        List<SpuAttrValueVo> baseAttrs = spuVo.getBaseAttrs();
+        if (!CollectionUtils.isEmpty(baseAttrs)) {
+            this.baseService.saveBatch(
+                    baseAttrs.stream().map(
+                            spuAttrValueVo -> {
+                                SpuAttrValueEntity spuAttrValueEntity = new SpuAttrValueEntity();
+                                BeanUtils.copyProperties(spuAttrValueVo, spuAttrValueEntity);
+                                spuAttrValueEntity.setSpuId(spuId);
+                                return spuAttrValueEntity;
+                            }
+                    ).collect(Collectors.toList())
+            );
+        }
+    }
+
+    private Long saveSpuInfo(SpuVo spuVo) {
+        spuVo.setCreateTime(new Date());
+        spuVo.setUpdateTime(spuVo.getCreateTime());
+        this.save(spuVo);
+        return spuVo.getId();
     }
 
 }
