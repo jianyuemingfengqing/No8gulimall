@@ -4,6 +4,7 @@ import com.baomidou.mybatisplus.extension.service.IService;
 import com.learn.gmall.common.bean.PageResultVo;
 import com.learn.gmall.common.bean.PageParamVo;
 import com.learn.gmall.pms.entity.SpuDescEntity;
+import com.learn.gmall.pms.vo.SpuVo;
 
 import java.util.Map;
 
@@ -17,5 +18,7 @@ import java.util.Map;
 public interface SpuDescService extends IService<SpuDescEntity> {
 
     PageResultVo queryPage(PageParamVo paramVo);
+
+    void saveSpuDesc(SpuVo spuVo, Long spuId);
 }
 

@@ -1,6 +1,11 @@
 package com.learn.gmall.pms.service.impl;
 
+import com.baomidou.mybatisplus.core.toolkit.CollectionUtils;
+import com.learn.gmall.pms.vo.SpuVo;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 import java.util.Map;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
@@ -24,6 +29,17 @@ public class SpuDescServiceImpl extends ServiceImpl<SpuDescMapper, SpuDescEntity
         );
 
         return new PageResultVo(page);
+    }
+
+    @Override
+    public void saveSpuDesc(SpuVo spuVo, Long spuId) {
+        List<String> spuImages = spuVo.getSpuImages();
+        if (!CollectionUtils.isEmpty(spuImages)) {
+            SpuDescEntity spuDescEntity = new SpuDescEntity();
+            spuDescEntity.setSpuId(spuId);
+            spuDescEntity.setDecript(StringUtils.join(spuVo.getSpuImages(), ","));
+            this.save(spuDescEntity);
+        }
     }
 
 }

@@ -11,10 +11,7 @@ import com.learn.gmall.pms.feign.GmallSmsClient;
 import com.learn.gmall.pms.mapper.SkuMapper;
 import com.learn.gmall.pms.mapper.SpuDescMapper;
 import com.learn.gmall.pms.mapper.SpuMapper;
-import com.learn.gmall.pms.service.SkuAttrValueService;
-import com.learn.gmall.pms.service.SkuImagesService;
-import com.learn.gmall.pms.service.SpuAttrValueService;
-import com.learn.gmall.pms.service.SpuService;
+import com.learn.gmall.pms.service.*;
 import com.learn.gmall.pms.vo.SkuVo;
 import com.learn.gmall.pms.vo.SpuAttrValueVo;
 import com.learn.gmall.pms.vo.SpuVo;
@@ -31,8 +28,7 @@ import java.util.stream.Collectors;
 
 @Service("spuService")
 public class SpuServiceImpl extends ServiceImpl<SpuMapper, SpuEntity> implements SpuService {
-    @Resource
-    private SpuDescMapper descMapper;
+
     @Resource
     private SpuAttrValueService baseService;
     @Resource
@@ -44,6 +40,8 @@ public class SpuServiceImpl extends ServiceImpl<SpuMapper, SpuEntity> implements
     @Resource
     private GmallSmsClient smsClient;
 
+    @Resource
+    private SpuDescService descService;
     @Override
     public PageResultVo queryPage(PageParamVo paramVo) {
         IPage<SpuEntity> page = this.page(
@@ -81,11 +79,12 @@ public class SpuServiceImpl extends ServiceImpl<SpuMapper, SpuEntity> implements
     @Override
     public void bigSave(SpuVo spuVo) {
         //1. 保存 spu
-
-        Long spuId = saveSpuInfo(spuVo);// 获取新增后的spuId
+        saveSpuInfo(spuVo);
+        Long spuId = spuVo.getId(); // 获取新增后的spuId
 
         // 1.2. 保存pms_spu_desc
-        saveSpuDesc(spuVo);
+
+        descService.saveSpuDesc(spuVo, spuId);
 
         // 1.3. 保存pms_spu_attr_value
         saveBaseAttr(spuVo, spuId);
@@ -96,15 +95,6 @@ public class SpuServiceImpl extends ServiceImpl<SpuMapper, SpuEntity> implements
 
     }
 
-    private void saveSpuDesc(SpuVo spuVo) {
-        List<String> spuImages = spuVo.getSpuImages();
-        if (!CollectionUtils.isEmpty(spuImages)) {
-            SpuDescEntity spuDescEntity = new SpuDescEntity();
-            spuDescEntity.setSpuId(spuVo.getId());
-            spuDescEntity.setDecript(StringUtils.join(spuVo.getSpuImages(), ","));
-            this.descMapper.insert(spuDescEntity);
-        }
-    }
 
     private void saveSkuInfo(SpuVo spuVo, Long spuId) {
         List<SkuVo> skuVos = spuVo.getSkus();
