@@ -18,6 +18,7 @@ import com.learn.gmall.pms.vo.SkuVo;
 import com.learn.gmall.pms.vo.SpuAttrValueVo;
 import com.learn.gmall.pms.vo.SpuVo;
 import com.learn.gmall.sms.vo.SkuSaleVo;
+import io.seata.spring.annotation.GlobalTransactional;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
@@ -81,7 +82,7 @@ public class SpuServiceImpl extends ServiceImpl<SpuMapper, SpuEntity> implements
     }
 
     @Override
-    @Transactional
+    @GlobalTransactional
     public void bigSave(SpuVo spuVo) {
         //1. 保存 spu
         saveSpuInfo(spuVo);

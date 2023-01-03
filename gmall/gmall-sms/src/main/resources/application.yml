@@ -11,7 +11,7 @@ spring:
         port: 8719
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://192.168.176.128:3306/guli_pms?useUnicode=true&characterEncoding=UTF-8&useSSL=false
+    url: jdbc:mysql://192.168.176.128:3306/guli_sms?useUnicode=true&characterEncoding=UTF-8&useSSL=false
     username: root
     password: 123456
   redis:
@@ -34,3 +34,10 @@ mybatis-plus:
 feign:
   sentinel:
     enabled: true
+seata:
+  tx-service-group: gmall-tx-group
+  service:
+    vgroup-mapping:
+      gmall-tx-group: default
+    grouplist:
+      default: localhost:8091

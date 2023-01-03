@@ -328,3 +328,18 @@ INSERT INTO `sms_sku_ladder` VALUES ('3', '7', '2', '9.00', null);
 INSERT INTO `sms_sku_ladder` VALUES ('4', '8', '2', '80.00', null);
 INSERT INTO `sms_sku_ladder` VALUES ('5', '9', '2', '9.00', null);
 INSERT INTO `sms_sku_ladder` VALUES ('6', '10', '2', '80.00', null);
+
+DROP TABLE IF EXISTS `undo_log`;
+CREATE TABLE `undo_log` (
+                            `id` bigint(20) NOT NULL AUTO_INCREMENT,
+                            `branch_id` bigint(20) NOT NULL,
+                            `xid` varchar(100) NOT NULL,
+                            `context` varchar(128) NOT NULL,
+                            `rollback_info` longblob NOT NULL,
+                            `log_status` int(11) NOT NULL,
+                            `log_created` datetime NOT NULL,
+                            `log_modified` datetime NOT NULL,
+                            `ext` varchar(100) DEFAULT NULL,
+                            PRIMARY KEY (`id`),
+                            UNIQUE KEY `ux_undo_log` (`xid`,`branch_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;

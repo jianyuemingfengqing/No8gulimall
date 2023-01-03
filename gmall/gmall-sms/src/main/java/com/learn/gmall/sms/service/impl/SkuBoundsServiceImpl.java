@@ -15,6 +15,7 @@ import com.learn.gmall.sms.service.SkuBoundsService;
 import com.learn.gmall.sms.vo.SkuSaleVo;
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.CollectionUtils;
 
 import javax.annotation.Resource;
@@ -39,6 +40,7 @@ public class SkuBoundsServiceImpl extends ServiceImpl<SkuBoundsMapper, SkuBounds
     }
 
     @Override
+    @Transactional
     public void saveSkuSaleInfo(SkuSaleVo skuSaleVo) {
         // 3.1. 积分优惠
         SkuBoundsEntity skuBoundsEntity = new SkuBoundsEntity();
