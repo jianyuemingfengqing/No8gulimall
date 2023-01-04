@@ -5,8 +5,6 @@ import com.learn.gmall.common.bean.PageResultVo;
 import com.learn.gmall.common.bean.PageParamVo;
 import com.learn.gmall.pms.entity.SkuAttrValueEntity;
 
-import java.util.Map;
-
 /**
  * sku销售属性&值
  *

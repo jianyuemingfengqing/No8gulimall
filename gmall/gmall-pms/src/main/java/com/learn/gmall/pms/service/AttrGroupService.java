@@ -7,7 +7,6 @@ import com.learn.gmall.pms.entity.AttrGroupEntity;
 import com.learn.gmall.pms.vo.GroupVo;
 
 import java.util.List;
-import java.util.Map;
 
 /**
  * 属性分组

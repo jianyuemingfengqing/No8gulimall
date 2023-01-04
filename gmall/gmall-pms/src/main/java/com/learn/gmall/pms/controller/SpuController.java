@@ -8,9 +8,9 @@ import com.learn.gmall.pms.service.SpuService;
 import com.learn.gmall.pms.vo.SpuVo;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import javax.annotation.Resource;
 import java.util.List;
 
 /**
@@ -25,8 +25,16 @@ import java.util.List;
 @RequestMapping("pms/spu")
 public class SpuController {
 
-    @Autowired
+    @Resource
     private SpuService spuService;
+
+    @PostMapping("json")
+    @ApiOperation("分页查询")
+    public ResponseVo<List<SpuEntity>> querySpuByPageJson(@RequestBody PageParamVo paramVo) {
+        PageResultVo pageResultVo = spuService.queryPage(paramVo);
+
+        return ResponseVo.ok((List<SpuEntity>) pageResultVo.getList());
+    }
 
     /**
      * 列表

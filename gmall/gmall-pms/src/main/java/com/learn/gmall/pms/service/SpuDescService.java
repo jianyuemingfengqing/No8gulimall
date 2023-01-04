@@ -6,8 +6,6 @@ import com.learn.gmall.common.bean.PageParamVo;
 import com.learn.gmall.pms.entity.SpuDescEntity;
 import com.learn.gmall.pms.vo.SpuVo;
 
-import java.util.Map;
-
 /**
  * spu信息介绍
  *

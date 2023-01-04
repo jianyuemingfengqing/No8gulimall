@@ -10,7 +10,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.learn.gmall.pms.entity.SpuAttrValueEntity;
@@ -18,6 +17,8 @@ import com.learn.gmall.pms.service.SpuAttrValueService;
 import com.learn.gmall.common.bean.PageResultVo;
 import com.learn.gmall.common.bean.ResponseVo;
 import com.learn.gmall.common.bean.PageParamVo;
+
+import javax.annotation.Resource;
 
 /**
  * spu属性值
@@ -31,7 +32,7 @@ import com.learn.gmall.common.bean.PageParamVo;
 @RequestMapping("pms/spuattrvalue")
 public class SpuAttrValueController {
 
-    @Autowired
+    @Resource
     private SpuAttrValueService spuAttrValueService;
 
     /**

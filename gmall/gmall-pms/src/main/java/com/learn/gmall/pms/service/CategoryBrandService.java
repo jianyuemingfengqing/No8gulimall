@@ -5,8 +5,6 @@ import com.learn.gmall.common.bean.PageResultVo;
 import com.learn.gmall.common.bean.PageParamVo;
 import com.learn.gmall.pms.entity.CategoryBrandEntity;
 
-import java.util.Map;
-
 /**
  * 品牌分类关联
  *

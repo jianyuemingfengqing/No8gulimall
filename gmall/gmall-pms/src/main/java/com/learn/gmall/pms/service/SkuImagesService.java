@@ -5,8 +5,6 @@ import com.learn.gmall.common.bean.PageResultVo;
 import com.learn.gmall.common.bean.PageParamVo;
 import com.learn.gmall.pms.entity.SkuImagesEntity;
 
-import java.util.Map;
-
 /**
  * sku图片
  *
