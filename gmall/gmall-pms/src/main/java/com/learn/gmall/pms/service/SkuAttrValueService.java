@@ -5,6 +5,8 @@ import com.learn.gmall.common.bean.PageResultVo;
 import com.learn.gmall.common.bean.PageParamVo;
 import com.learn.gmall.pms.entity.SkuAttrValueEntity;
 
+import java.util.List;
+
 /**
  * sku销售属性&值
  *
@@ -15,5 +17,7 @@ import com.learn.gmall.pms.entity.SkuAttrValueEntity;
 public interface SkuAttrValueService extends IService<SkuAttrValueEntity> {
 
     PageResultVo queryPage(PageParamVo paramVo);
+
+    List<SkuAttrValueEntity> querySearchAttrValuesByCidAndSkuId(Long cid, Long skuId);
 }
 
