@@ -39,3 +39,7 @@ spring:
           uri: lb://index-service
           predicates:
             - Path=/index/**
+        - id: item-service # 异步请求配置路由，通过ajax请求加载数据
+          uri: lb://item-service
+          predicates:
+            - Host=item.gmall.com
