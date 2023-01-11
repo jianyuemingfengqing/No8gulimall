@@ -34,7 +34,7 @@ public class SpuDescServiceImpl extends ServiceImpl<SpuDescMapper, SpuDescEntity
     }
 
     @Override
-    @Transactional(propagation = Propagation.REQUIRES_NEW)
+    @Transactional/*(propagation = Propagation.REQUIRES_NEW)*/
     //使用事务 需要由service调用, 所以将方法移到这里
     public void saveSpuDesc(SpuVo spuVo, Long spuId) {
         List<String> spuImages = spuVo.getSpuImages();

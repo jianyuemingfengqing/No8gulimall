@@ -27,7 +27,7 @@ spring:
       probability: 1
 mybatis-plus:
   mapper-locations: classpath:mapper/pms/**/*.xml  # 读取映射文件
-  type-aliases-package: com.learn.gmall.pms.entity #别名扫描, 不用写全类名
+  type-aliases-package: com.learn. gmall.pms.entity #别名扫描, 不用写全类名
   global-config:
     db-config:
       id-type: auto  # 默认使用数据库自增
@@ -35,9 +35,9 @@ feign:
   sentinel:
     enabled: true
 
-logging:
-  level:
-    org.springframework: debug #提升范围, 为了看到事务创建
+#logging:
+#  level:
+#    org.springframework: debug #提升范围, 为了看到事务创建
 seata:
   tx-service-group: gmall-tx-group
   service:

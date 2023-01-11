@@ -3,6 +3,7 @@ package com.learn.gmall.pms.api;
 import com.learn.gmall.common.bean.PageParamVo;
 import com.learn.gmall.common.bean.ResponseVo;
 import com.learn.gmall.pms.entity.*;
+import io.swagger.annotations.ApiOperation;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -19,6 +20,10 @@ public interface GmallPmsApi {
 
     @GetMapping("pms/category/{id}")
     ResponseVo<CategoryEntity> queryCategoryById(@PathVariable("id") Long id);
+    @GetMapping("pms/category/parent/{parentID}")
+    ResponseVo<List<CategoryEntity>> queryCategory(@PathVariable("parentID") Long parentID);
+    @GetMapping("pms/category/level/23/{pid}")
+     ResponseVo<List<CategoryEntity>> queryLevel23CategoriesByPid(@PathVariable("pid") Long pid);
 
     @GetMapping("pms/skuattrvalue/search/attr/value/{cid}")
     ResponseVo<List<SkuAttrValueEntity>> querySearchAttrValuesByCidAndSkuId(

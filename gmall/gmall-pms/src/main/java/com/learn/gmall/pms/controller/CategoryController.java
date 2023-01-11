@@ -50,6 +50,12 @@ public class CategoryController {
 
         return ResponseVo.ok(categoryEntityList);
     }
+
+    @GetMapping("level/23/{pid}")
+    public ResponseVo<List<CategoryEntity>> queryLevel23CategoriesByPid(@PathVariable("pid") Long pid){
+        List<CategoryEntity> categoryEntities = this.categoryService.queryLevel23CategoriesByPid(pid);
+        return ResponseVo.ok(categoryEntities);
+    }
     /**
      * 信息
      */
