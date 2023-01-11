@@ -4,8 +4,10 @@ import com.baomidou.mybatisplus.extension.service.IService;
 import com.learn.gmall.common.bean.PageResultVo;
 import com.learn.gmall.common.bean.PageParamVo;
 import com.learn.gmall.sms.entity.SkuBoundsEntity;
+import com.learn.gmall.sms.vo.ItemSaleVo;
 import com.learn.gmall.sms.vo.SkuSaleVo;
 
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -20,5 +22,7 @@ public interface SkuBoundsService extends IService<SkuBoundsEntity> {
     PageResultVo queryPage(PageParamVo paramVo);
 
     void saveSkuSaleInfo(SkuSaleVo skuSaleVo);
+
+    List<ItemSaleVo> querySalesBySkuId(Long skuId);
 }
 

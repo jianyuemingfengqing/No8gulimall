@@ -1,5 +1,6 @@
 package com.learn.gmall.pms.controller;
 
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.learn.gmall.common.bean.PageParamVo;
 import com.learn.gmall.common.bean.PageResultVo;
 import com.learn.gmall.common.bean.ResponseVo;
@@ -26,7 +27,13 @@ public class SkuAttrValueController {
 
     @Resource
     private SkuAttrValueService skuAttrValueService;
-
+    @GetMapping("sku/{skuId}")
+    public ResponseVo<List<SkuAttrValueEntity>> querySaleAttrValuesBySkuId(@PathVariable("skuId")Long skuId){
+        List<SkuAttrValueEntity> skuAttrValueEntities = this.skuAttrValueService.list(
+                new QueryWrapper<SkuAttrValueEntity>().eq("sku_id", skuId)
+        );
+        return ResponseVo.ok(skuAttrValueEntities);
+    }
     @GetMapping("search/attr/value/{cid}")
     public ResponseVo<List<SkuAttrValueEntity>> querySearchAttrValuesByCidAndSkuId(
             @PathVariable("cid") Long cid,

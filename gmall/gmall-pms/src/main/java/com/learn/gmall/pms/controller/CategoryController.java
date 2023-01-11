@@ -56,6 +56,13 @@ public class CategoryController {
         List<CategoryEntity> categoryEntities = this.categoryService.queryLevel23CategoriesByPid(pid);
         return ResponseVo.ok(categoryEntities);
     }
+
+    @GetMapping("lvl/123/{cid3}")//查询三级分类
+    public ResponseVo<List<CategoryEntity>> queryLvl123CategoriesByCid3(@PathVariable("cid3")Long cid3){
+        List<CategoryEntity> categoryEntities = this.categoryService.queryLvl123CategoriesByCid3(cid3);
+        return ResponseVo.ok(categoryEntities);
+    }
+
     /**
      * 信息
      */
