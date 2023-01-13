@@ -6,6 +6,7 @@ import com.learn.gmall.common.bean.PageResultVo;
 import com.learn.gmall.common.bean.ResponseVo;
 import com.learn.gmall.pms.entity.SkuAttrValueEntity;
 import com.learn.gmall.pms.service.SkuAttrValueService;
+import com.learn.gmall.pms.vo.SaleAttrValueVo;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.web.bind.annotation.*;
@@ -27,6 +28,19 @@ public class SkuAttrValueController {
 
     @Resource
     private SkuAttrValueService skuAttrValueService;
+
+    @GetMapping("mapping/{spuId}")
+    public ResponseVo<String> queryMappingBySpuId(@PathVariable("spuId")Long spuId){
+        String json = this.skuAttrValueService.queryMappingBySpuId(spuId);
+        return ResponseVo.ok(json);
+    }
+
+    @GetMapping("spu/{spuId}")
+    public ResponseVo<List<SaleAttrValueVo>> querySaleAttrValuesBySpuId(@PathVariable("spuId")Long spuId){
+        List<SaleAttrValueVo> saleAttrValueVos = this.skuAttrValueService.querySaleAttrValuesBySpuId(spuId);
+        return ResponseVo.ok(saleAttrValueVos);
+    }
+
     @GetMapping("sku/{skuId}")
     public ResponseVo<List<SkuAttrValueEntity>> querySaleAttrValuesBySkuId(@PathVariable("skuId")Long skuId){
         List<SkuAttrValueEntity> skuAttrValueEntities = this.skuAttrValueService.list(

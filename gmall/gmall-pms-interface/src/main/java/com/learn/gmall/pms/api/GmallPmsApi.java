@@ -3,6 +3,8 @@ package com.learn.gmall.pms.api;
 import com.learn.gmall.common.bean.PageParamVo;
 import com.learn.gmall.common.bean.ResponseVo;
 import com.learn.gmall.pms.entity.*;
+import com.learn.gmall.pms.vo.ItemGroupVo;
+import com.learn.gmall.pms.vo.SaleAttrValueVo;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.web.bind.annotation.*;
 
@@ -33,7 +35,7 @@ public interface GmallPmsApi {
     @GetMapping("pms/category/level/23/{pid}")
     ResponseVo<List<CategoryEntity>> queryLevel23CategoriesByPid(@PathVariable("pid") Long pid);
 
-    @GetMapping("lvl/123/{cid3}")
+    @GetMapping("pms/category/lvl/123/{cid3}")
 //查询三级分类
     ResponseVo<List<CategoryEntity>> queryLvl123CategoriesByCid3(@PathVariable("cid3") Long cid3);
 
@@ -56,6 +58,18 @@ public interface GmallPmsApi {
             @PathVariable("cid") Long cid,
             @RequestParam("spuId") Long spuId
     );
+    @GetMapping("pms/skuattrvalue/mapping/{spuId}")
+    ResponseVo<String> queryMappingBySpuId(@PathVariable("spuId")Long spuId);
+    @GetMapping("pms/skuattrvalue/spu/{spuId}")
+    ResponseVo<List<SaleAttrValueVo>> querySaleAttrValuesBySpuId(@PathVariable("spuId")Long spuId);
+
+
     @GetMapping("pms/spudesc/{spuId}")
      ResponseVo<SpuDescEntity> querySpuDescById(@PathVariable("spuId") Long spuId);
+
+    @GetMapping("pms/attrgroup/with/attr/value/{cid}")
+    ResponseVo<List<ItemGroupVo>> queryGroupWithAttrValuesByCidAndSpuIdAndSkuId(
+            @PathVariable("cid")Long cid, @RequestParam("spuId")Long spuId, @RequestParam("skuId")Long skuId
+    );
+
 }
