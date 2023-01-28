@@ -20,6 +20,7 @@ import com.learn.gmall.pms.vo.SpuVo;
 import com.learn.gmall.sms.vo.SkuSaleVo;
 import io.seata.spring.annotation.GlobalTransactional;
 import org.apache.commons.lang3.StringUtils;
+import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
 
@@ -42,9 +43,11 @@ public class SpuServiceImpl extends ServiceImpl<SpuMapper, SpuEntity> implements
     private SkuImagesService imagesService;
     @Resource
     private GmallSmsClient smsClient;
-
     @Resource
     private SpuDescService descService;
+
+    @Resource
+    private RabbitTemplate rabbitTemplate;
 
     @Override
     public PageResultVo queryPage(PageParamVo paramVo) {
@@ -98,6 +101,9 @@ public class SpuServiceImpl extends ServiceImpl<SpuMapper, SpuEntity> implements
 
         //2.保存sku
         saveSkuInfo(spuVo, spuId);
+
+        // 生产者  消费者是es
+        this.rabbitTemplate.convertAndSend("PMS.SPU.EXCHANGE","item.insert",spuId);// 项目, 模块
 
     }
 

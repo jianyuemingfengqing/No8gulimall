@@ -17,6 +17,14 @@ spring:
   redis:
     host: 192.168.176.128
     port: 6379
+  rabbitmq:
+    host: 192.168.176.128
+    port: 5672
+    virtual-host: /learn
+    username: lin
+    password: lin
+    publisher-confirm-type: correlated
+    publisher-returns: true
   zipkin:
     base-url: http://localhost:9411
     discovery-client-enabled: false
