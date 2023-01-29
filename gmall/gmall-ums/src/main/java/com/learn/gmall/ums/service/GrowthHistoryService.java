@@ -5,8 +5,6 @@ import com.learn.gmall.common.bean.PageResultVo;
 import com.learn.gmall.common.bean.PageParamVo;
 import com.learn.gmall.ums.entity.GrowthHistoryEntity;
 
-import java.util.Map;
-
 /**
  * 成长积分记录表
  *

@@ -43,3 +43,7 @@ spring:
           uri: lb://item-service
           predicates:
             - Host=item.gmall.com
+        - id: auth-service # 异步请求配置路由，通过ajax请求加载数据
+          uri: lb://auth-service
+          predicates:
+            - Host=sso.gmall.com

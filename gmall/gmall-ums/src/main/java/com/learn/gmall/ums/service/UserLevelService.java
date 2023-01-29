@@ -5,8 +5,6 @@ import com.learn.gmall.common.bean.PageResultVo;
 import com.learn.gmall.common.bean.PageParamVo;
 import com.learn.gmall.ums.entity.UserLevelEntity;
 
-import java.util.Map;
-
 /**
  * 会员等级表
  *

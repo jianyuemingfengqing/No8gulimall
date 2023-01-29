@@ -11,7 +11,6 @@ import com.learn.gmall.ums.mapper.UserMapper;
 import com.learn.gmall.ums.service.UserService;
 import org.apache.commons.codec.digest.DigestUtils;
 import org.apache.commons.lang3.StringUtils;
-import org.omg.CORBA.UserException;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;

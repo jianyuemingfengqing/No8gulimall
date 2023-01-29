@@ -5,8 +5,6 @@ import com.learn.gmall.common.bean.PageResultVo;
 import com.learn.gmall.common.bean.PageParamVo;
 import com.learn.gmall.ums.entity.IntegrationHistoryEntity;
 
-import java.util.Map;
-
 /**
  * 购物积分记录表
  *

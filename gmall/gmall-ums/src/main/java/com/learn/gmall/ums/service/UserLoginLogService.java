@@ -5,8 +5,6 @@ import com.learn.gmall.common.bean.PageResultVo;
 import com.learn.gmall.common.bean.PageParamVo;
 import com.learn.gmall.ums.entity.UserLoginLogEntity;
 
-import java.util.Map;
-
 /**
  * 用户登陆记录表
  *
