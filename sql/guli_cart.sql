@@ -15,5 +15,5 @@ CREATE TABLE `cart_info` (
   `sale_attrs` varchar(255) DEFAULT NULL COMMENT '销售属性（json格式）',
   `sales` varchar(255) DEFAULT NULL COMMENT '营销信息（json格式）',
   PRIMARY KEY (`id`),
-  KEY `idx_uid_sid` (`user_id`,`sku_id`) #组合索引 顺序不能颠倒
+  KEY `idx_uid_sid` (`user_id`,`sku_id`) #组合索引 顺序不能颠倒,需要用用户id查商品, 点到后就不能走索引, 速度慢
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;

@@ -17,7 +17,7 @@ public class Cart {
     private String userId;
     @TableField("sku_id")
     private Long skuId;
-    @TableField("`check`") // check是mysql的关键字，所以这里要加'`'号
+    @TableField("`check`") // check是mysql的关键字，所以这里要加'`'号, 不加反引号会报错
     private Boolean check; // 选中状态
     private String defaultImage;
     private String title;
