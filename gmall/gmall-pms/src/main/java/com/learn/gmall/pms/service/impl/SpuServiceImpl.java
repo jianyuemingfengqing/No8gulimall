@@ -25,6 +25,7 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
+import java.io.FileNotFoundException;
 import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -85,10 +86,11 @@ public class SpuServiceImpl extends ServiceImpl<SpuMapper, SpuEntity> implements
 
     @Override
     @GlobalTransactional
-    public void bigSave(SpuVo spuVo) {
+    public void bigSave(SpuVo spuVo)  {
         //1. 保存 spu
-        saveSpuInfo(spuVo);
-        Long spuId = spuVo.getId(); // 获取新增后的spuId
+        Long spuId = saveSpuInfo(spuVo);
+//        Long spuId = spuVo.getId(); // 获取新增后的spuId
+
 
         // 1.2. 保存pms_spu_desc
 

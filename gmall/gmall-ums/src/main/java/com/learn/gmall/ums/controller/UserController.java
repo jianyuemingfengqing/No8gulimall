@@ -7,9 +7,9 @@ import com.learn.gmall.ums.entity.UserEntity;
 import com.learn.gmall.ums.service.UserService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import javax.annotation.Resource;
 import java.util.List;
 
 /**
@@ -24,7 +24,7 @@ import java.util.List;
 @RequestMapping("ums/user")
 public class UserController {
 
-    @Autowired
+    @Resource
     private UserService userService;
 
 

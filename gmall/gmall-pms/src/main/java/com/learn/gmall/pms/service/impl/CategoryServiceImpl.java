@@ -39,7 +39,8 @@ public class CategoryServiceImpl extends ServiceImpl<CategoryMapper, CategoryEnt
         if (parentID != -1){
             wrapper.eq("parent_id",parentID);
         }
-        return categoryMapper.selectList(wrapper);
+        return this.list(wrapper);
+//        return categoryMapper.selectList(wrapper);
     }
 
     @Override
