@@ -35,6 +35,7 @@ public class AttrGroupController {
         List<GroupVo> groupVoList = attrGroupService.queryByCid(cid);
         return ResponseVo.ok(groupVoList);
     }
+
     /**
      * 列表
      */
