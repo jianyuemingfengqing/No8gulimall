@@ -22,6 +22,6 @@ public interface AttrGroupService extends IService<AttrGroupEntity> {
 
     List<GroupVo> queryByCid(Long cid);
 
-    List<ItemGroupVo> queryGroupWithAttrValuesByCidAndSpuIdAndSkuId(String cid, String spuId, String skuId);
+    List<ItemGroupVo> queryGroupWithAttrValuesByCidAndSpuIdAndSkuId(Long cid, Long spuId, Long skuId);
 }
 

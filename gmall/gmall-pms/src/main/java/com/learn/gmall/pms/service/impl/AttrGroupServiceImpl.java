@@ -17,8 +17,6 @@ import com.learn.gmall.pms.service.AttrGroupService;
 import com.learn.gmall.pms.vo.AttrValueVo;
 import com.learn.gmall.pms.vo.GroupVo;
 import com.learn.gmall.pms.vo.ItemGroupVo;
-import com.learn.gmall.pms.vo.SpuAttrValueVo;
-import jdk.nashorn.internal.ir.CallNode;
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;
@@ -75,7 +73,7 @@ public class AttrGroupServiceImpl extends ServiceImpl<AttrGroupMapper, AttrGroup
     }
 
     @Override
-    public List<ItemGroupVo> queryGroupWithAttrValuesByCidAndSpuIdAndSkuId(String cid, String spuId, String skuId) {
+    public List<ItemGroupVo> queryGroupWithAttrValuesByCidAndSpuIdAndSkuId(Long cid, Long spuId, Long skuId) {
         //根据分类找分组
         List<AttrGroupEntity> attrGroupEntities = list(
                 new QueryWrapper<AttrGroupEntity>().eq("category_id", cid)

@@ -32,9 +32,9 @@ public class AttrGroupController {
 
     @GetMapping("with/attr/value/{cid}")
     public ResponseVo<List<ItemGroupVo>> queryGroupWithAttrValuesByCidAndSpuIdAndSkuId(
-            @PathVariable("cid") String cid,
-            @PathVariable("spuId") String spuId,
-            @PathVariable("skuId") String skuId
+            @PathVariable("cid")Long cid,
+            @RequestParam("spuId")Long spuId,
+            @RequestParam("skuId")Long skuId
     ) {
         List<ItemGroupVo> groupVos = this.attrGroupService.queryGroupWithAttrValuesByCidAndSpuIdAndSkuId(cid,spuId,skuId);
         return ResponseVo.ok(groupVos);
