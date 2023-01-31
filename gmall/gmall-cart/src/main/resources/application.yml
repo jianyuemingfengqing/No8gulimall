@@ -34,3 +34,8 @@ mybatis-plus:
 feign:
   sentinel:
     enabled: true
+jwt:
+  userKey: user-key
+  cookieName: GMALL-TOKEN
+  pubKeyPath: F:\useless\rsa\rsa.pub
+  expire: 15552000 #半年 180*24*60*60 精确到秒

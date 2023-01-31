@@ -7,6 +7,7 @@ import com.learn.gmall.common.bean.ResponseVo;
 import com.learn.gmall.pms.entity.AttrGroupEntity;
 import com.learn.gmall.pms.service.AttrGroupService;
 import com.learn.gmall.pms.vo.GroupVo;
+import com.learn.gmall.pms.vo.ItemGroupVo;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.web.bind.annotation.*;
@@ -28,6 +29,16 @@ public class AttrGroupController {
 
     @Resource
     private AttrGroupService attrGroupService;
+
+    @GetMapping("with/attr/value/{cid}")
+    public ResponseVo<List<ItemGroupVo>> queryGroupWithAttrValuesByCidAndSpuIdAndSkuId(
+            @PathVariable("cid") String cid,
+            @PathVariable("spuId") String spuId,
+            @PathVariable("skuId") String skuId
+    ) {
+        List<ItemGroupVo> groupVos = this.attrGroupService.queryGroupWithAttrValuesByCidAndSpuIdAndSkuId(cid,spuId,skuId);
+        return ResponseVo.ok(groupVos);
+    }
 
     @GetMapping("withattrs/{catId}")
     @ApiOperation("查询分类下的组及规格参数")

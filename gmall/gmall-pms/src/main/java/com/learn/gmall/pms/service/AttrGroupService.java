@@ -5,6 +5,7 @@ import com.learn.gmall.common.bean.PageResultVo;
 import com.learn.gmall.common.bean.PageParamVo;
 import com.learn.gmall.pms.entity.AttrGroupEntity;
 import com.learn.gmall.pms.vo.GroupVo;
+import com.learn.gmall.pms.vo.ItemGroupVo;
 
 import java.util.List;
 
@@ -20,5 +21,7 @@ public interface AttrGroupService extends IService<AttrGroupEntity> {
     PageResultVo queryPage(PageParamVo paramVo);
 
     List<GroupVo> queryByCid(Long cid);
+
+    List<ItemGroupVo> queryGroupWithAttrValuesByCidAndSpuIdAndSkuId(String cid, String spuId, String skuId);
 }
 

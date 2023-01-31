@@ -1,4 +1,3 @@
-/*
 package com.learn.gmall.cart.interceptors;
 
 
@@ -31,7 +30,7 @@ public class LoginInterceptor implements HandlerInterceptor {
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
 
         // 获取当前用户的登录状态，从cookie中获取userKey和token
-        String userKey = CookieUtils.getCookieValue(request, this.properties.getUserKey());
+        String userKey = CookieUtils.getCookieValue(request, this.properties.getUserKey()); //无论登录与否, 都需要userkey
         String token = CookieUtils.getCookieValue(request, this.properties.getCookieName());
         if (StringUtils.isBlank(userKey)){
             // 如果userKey不存在则生成一个放入cookie
@@ -44,7 +43,7 @@ public class LoginInterceptor implements HandlerInterceptor {
         if (StringUtils.isNotBlank(token)){
             try {
                 Map<String, Object> map = JwtUtils.getInfoFromToken(token, this.properties.getPublicKey());
-                userId = Long.valueOf(map.get("userId").toString());
+                userId = Long.valueOf(map.get("userId").toString()); // userid从object类型 转为 string 再转为 long
             } catch (Exception e) {
                 e.printStackTrace();
             }
@@ -58,7 +57,7 @@ public class LoginInterceptor implements HandlerInterceptor {
     }
 
     public static UserInfo getUserInfo(){
-        return THREAD_LOCAL.get();
+        return THREAD_LOCAL.get();// 提供使用方法
     }
 
     @Override
@@ -73,4 +72,3 @@ public class LoginInterceptor implements HandlerInterceptor {
         THREAD_LOCAL.remove();
     }
 }
-*/

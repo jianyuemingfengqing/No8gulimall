@@ -3,6 +3,7 @@ package com.learn.gmall.pms.mapper;
 import com.learn.gmall.pms.entity.SkuAttrValueEntity;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 import java.util.Map;
@@ -17,5 +18,5 @@ import java.util.Map;
 @Mapper
 public interface SkuAttrValueMapper extends BaseMapper<SkuAttrValueEntity> {
 
-    List<Map<String, Object>> queryMappingBySkuIds(List<Long> skuIds);
+    List<Map<String, Object>> queryMappingBySkuIds(@Param("skuIds") List<Long> skuIds);//集合参数需要使用注解指定集合名,不然接收不了
 }

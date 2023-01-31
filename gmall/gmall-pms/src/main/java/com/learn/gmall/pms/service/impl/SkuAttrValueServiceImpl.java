@@ -96,7 +96,7 @@ public class SkuAttrValueServiceImpl extends ServiceImpl<SkuAttrValueMapper, Sku
         //  {attrId: 5, attrName: 机身存储, attrValues: ['128G', '256G']}]
         // 分组完成之后，以attrId作为key，以当前这组数据作为value
         Map<Long, List<SkuAttrValueEntity>> map = skuAttrValueEntities.stream()
-                                                     .collect(Collectors.groupingBy(SkuAttrValueEntity::getAttrId));
+                .collect(Collectors.groupingBy(SkuAttrValueEntity::getAttrId));
         List<SaleAttrValueVo> saleAttrValueVos = new ArrayList<>();
         // 把每一个kv转化成SaleAttrValueVo对象
         map.forEach((attrId, attrValueEntities) -> {
@@ -116,23 +116,30 @@ public class SkuAttrValueServiceImpl extends ServiceImpl<SkuAttrValueMapper, Sku
     @Override
     public String queryMappingBySpuId(Long spuId) {
         // 1.根据spuId查询sku
-        List<SkuEntity> skuEntities = this.skuMapper.selectList(new QueryWrapper<SkuEntity>().eq("spu_id", spuId));
+        List<SkuEntity> skuEntities = this.skuMapper.selectList(
+                new QueryWrapper<SkuEntity>().eq("spu_id", spuId)
+        );
         if (CollectionUtils.isEmpty(skuEntities)) {
             return null;
         }
-
         // 获取skuId集合
         List<Long> skuIds = skuEntities.stream().map(SkuEntity::getId).collect(Collectors.toList());
 
         // 2.根据skuids查询映射关系：{'暗夜黑,8G,128G': 100, '暗夜黑,8G,256G': 101}
         List<Map<String, Object>> maps = this.attrValueMapper.queryMappingBySkuIds(skuIds);
+
         if (CollectionUtils.isEmpty(maps)) {
             return null;
         }
         // 把map的list集合 转化成一个map集合
-        Map<String, Long> mappingMap = maps.stream().collect(Collectors.toMap(map -> map.get("attr_values").toString(), map -> (Long) map.get("sku_id")));
+        Map<String, Long> mappingMap = maps.stream().collect(
+                Collectors.toMap(
+                        map -> map.get("attr_values").toString(),//设置key
+                        map -> (Long) map.get("sku_id")//设置value
+                )
+        );
 
-        return JSON.toJSONString(mappingMap);
+        return JSON.toJSONString(mappingMap); // 序列化为字符串
     }
 
 }

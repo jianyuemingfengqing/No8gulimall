@@ -7,14 +7,24 @@ import com.learn.gmall.common.bean.PageParamVo;
 import com.learn.gmall.common.bean.PageResultVo;
 import com.learn.gmall.pms.entity.AttrEntity;
 import com.learn.gmall.pms.entity.AttrGroupEntity;
+import com.learn.gmall.pms.entity.SkuAttrValueEntity;
+import com.learn.gmall.pms.entity.SpuAttrValueEntity;
 import com.learn.gmall.pms.mapper.AttrGroupMapper;
 import com.learn.gmall.pms.mapper.AttrMapper;
+import com.learn.gmall.pms.mapper.SkuAttrValueMapper;
+import com.learn.gmall.pms.mapper.SpuAttrValueMapper;
 import com.learn.gmall.pms.service.AttrGroupService;
+import com.learn.gmall.pms.vo.AttrValueVo;
 import com.learn.gmall.pms.vo.GroupVo;
+import com.learn.gmall.pms.vo.ItemGroupVo;
+import com.learn.gmall.pms.vo.SpuAttrValueVo;
+import jdk.nashorn.internal.ir.CallNode;
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
+import org.springframework.util.CollectionUtils;
 
 import javax.annotation.Resource;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -23,7 +33,11 @@ import java.util.stream.Collectors;
 public class AttrGroupServiceImpl extends ServiceImpl<AttrGroupMapper, AttrGroupEntity> implements AttrGroupService {
 
     @Resource
-    AttrMapper attrMapper;
+    private AttrMapper attrMapper;
+    @Resource
+    private SpuAttrValueMapper baseAttrValueMapper;//基础属性
+    @Resource
+    private SkuAttrValueMapper saleAttrValueMapper;//销售属性
 
     @Override
     public PageResultVo queryPage(PageParamVo paramVo) {
@@ -58,6 +72,76 @@ public class AttrGroupServiceImpl extends ServiceImpl<AttrGroupMapper, AttrGroup
         ).collect(Collectors.toList());
 
         return groupVos;
+    }
+
+    @Override
+    public List<ItemGroupVo> queryGroupWithAttrValuesByCidAndSpuIdAndSkuId(String cid, String spuId, String skuId) {
+        //根据分类找分组
+        List<AttrGroupEntity> attrGroupEntities = list(
+                new QueryWrapper<AttrGroupEntity>().eq("category_id", cid)
+        );
+        if (CollectionUtils.isEmpty(attrGroupEntities)) {
+            return null;
+        }
+
+        return attrGroupEntities.stream().map(attrGroupEntity -> {
+            ItemGroupVo itemGroupVo = new ItemGroupVo();
+            // 设置基本属性
+            itemGroupVo.setId(attrGroupEntity.getId());
+            itemGroupVo.setName(attrGroupEntity.getName());
+
+            // 遍历数据
+            // 用分组id查询参数
+            List<AttrEntity> attrEntities = attrMapper.selectList(
+                    new QueryWrapper<AttrEntity>().eq("group_id", attrGroupEntity.getId())
+            );
+            if (CollectionUtils.isEmpty(attrEntities)) {
+                return itemGroupVo; // 没有, 就返回基础数据
+            }
+
+            // 获取参数id集合
+            List<Long> attrIds = attrEntities.stream().map(AttrEntity::getId).collect(Collectors.toList());
+
+            // 基本属性
+            List<SpuAttrValueEntity> spuAttrValueEntities = this.baseAttrValueMapper.selectList(
+                    new QueryWrapper<SpuAttrValueEntity>()
+                            .in("attr_id", attrIds)
+                            .eq("spu_id", spuId)
+            );
+            // 销售属性
+            List<SkuAttrValueEntity> skuAttrValueEntities = this.saleAttrValueMapper.selectList(
+                    new QueryWrapper<SkuAttrValueEntity>()
+                            .in("attr_id", attrIds)
+                            .eq("sku_id", skuId)
+            );
+            // 转为所需集合
+            ArrayList<AttrValueVo> attrValueVos = new ArrayList<>();// 接收参数值
+
+            // spu
+            if (!CollectionUtils.isEmpty(spuAttrValueEntities)){
+                attrValueVos.addAll(spuAttrValueEntities.stream().map(
+                        spuAttrValueEntity -> {
+                            AttrValueVo attrValueVo = new AttrValueVo();
+                            BeanUtils.copyProperties(spuAttrValueEntity,attrValueVo);
+                            return attrValueVo;
+                        }
+                ).collect(Collectors.toList()));
+            }
+
+            //sku
+            if (!CollectionUtils.isEmpty(skuAttrValueEntities)){
+                attrValueVos.addAll(skuAttrValueEntities.stream().map(
+                        skuAttrValueEntity -> {
+                            AttrValueVo attrValueVo = new AttrValueVo();
+                            BeanUtils.copyProperties(skuAttrValueEntity,attrValueVo);
+                            return attrValueVo;
+                        }
+                ).collect(Collectors.toList()));
+            }
+
+            itemGroupVo.setAttrValues(attrValueVos);//存储参数值
+            return itemGroupVo;
+        }).collect(Collectors.toList());
     }
 
 }
