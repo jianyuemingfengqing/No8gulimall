@@ -1,6 +1,7 @@
 package com.learn.gmall.cart.controller;
 
 
+import com.learn.gmall.cart.interceptors.LoginInterceptorTest;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -21,7 +22,7 @@ public class CartController {
                 "   " +
                 "userKey: " + request.getAttribute("userKey"));
         */
-
+        System.out.println("handle方法" + LoginInterceptorTest.getUserInfo());//局部线程
         return "test";
     }
 /*        //System.out.println("这是handler方法。。。。。。。。。。。。。。。。" + LoginInterceptor.getUserInfo());

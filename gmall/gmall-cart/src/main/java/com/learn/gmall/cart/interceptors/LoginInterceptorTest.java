@@ -11,7 +11,8 @@ import java.util.UUID;
 
 @Component
 public class LoginInterceptorTest implements HandlerInterceptor {
-//    public static UserInfo userInfo; // 初始化对象
+    //    public static UserInfo userInfo; // 初始化对象
+    private static final ThreadLocal<UserInfo> THREAD_LOCAL = new ThreadLocal<>();
 
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
@@ -27,10 +28,12 @@ public class LoginInterceptorTest implements HandlerInterceptor {
         request.setAttribute("userId", userId);
         request.setAttribute("userKey", userKey);
 */
-
+        THREAD_LOCAL.set(new UserInfo(userId, userKey));
         return true; // true 放行  false拦截
     }
-
+    public static UserInfo getUserInfo(){ //给外部提供调用方法
+        return THREAD_LOCAL.get();
+    }
     @Override
     public void postHandle(HttpServletRequest request, HttpServletResponse response, Object handler, ModelAndView modelAndView) throws Exception {
 
@@ -41,5 +44,8 @@ public class LoginInterceptorTest implements HandlerInterceptor {
     @Override
     public void afterCompletion(HttpServletRequest request, HttpServletResponse response, Object handler, Exception ex) throws Exception {
         System.out.println("完成");
+
+        // 一定要手动释放threadLocal中的资源，否则可能导致内存泄漏直至服务器宕机（OOM），因为这里我们使用的是tomcat线程池，所有请求结束线程不会结束
+        THREAD_LOCAL.remove();
     }
 }
