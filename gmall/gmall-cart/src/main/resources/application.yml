@@ -27,6 +27,18 @@ spring:
       probability: 1
   thymeleaf:
     cache: false
+  task:
+    execution:
+      thread-name-prefix: gmall-cart- #线程前缀 后面是数字1,2,3,4....
+      pool: # 线程池
+        core-size: 100
+        max-size: 500
+        queue-capacity: 5000
+        keep-alive: 60s
+        allow-core-thread-timeout: false # 操作的是spring的线程 可以销毁核心线程, juc是java的 不可以销毁
+      shutdown: # 关机时的操作
+        await-termination: true # 等待异步任务处理完再关机
+        await-termination-period: 60 # 等60s , 还没结束就强制关机
 mybatis-plus:
   global-config:
     db-config:

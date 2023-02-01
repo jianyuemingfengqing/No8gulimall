@@ -1,6 +1,6 @@
-/*
 package com.learn.gmall.cart.config;
 
+import com.learn.gmall.cart.exception.handler.AsyncExceptionHandler;
 import org.springframework.aop.interceptor.AsyncUncaughtExceptionHandler;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
@@ -18,11 +18,11 @@ public class AsyncConfig implements AsyncConfigurer {
     //@Autowired
     private ExecutorService executorService;
 
-    */
-/**
+    /**
      * 配置线程池
+     *
      * @return
-     *//*
+     */
 
     @Override
     public Executor getAsyncExecutor() {
@@ -34,4 +34,3 @@ public class AsyncConfig implements AsyncConfigurer {
         return asyncExceptionHandler;
     }
 }
-*/

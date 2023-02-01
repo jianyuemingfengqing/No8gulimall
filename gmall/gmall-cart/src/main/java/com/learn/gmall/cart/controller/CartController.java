@@ -3,14 +3,41 @@ package com.learn.gmall.cart.controller;
 
 import com.learn.gmall.cart.interceptors.LoginInterceptor;
 import com.learn.gmall.cart.interceptors.LoginInterceptorTest;
+import com.learn.gmall.cart.pojo.Cart;
+import com.learn.gmall.cart.service.CartService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpServletRequest;
+import java.math.BigDecimal;
 
 @Controller
 public class CartController {
+    @Autowired
+    private CartService cartService;
+
+    @GetMapping
+    public String saveCart(Cart cart){
+        // 新增购物车代码
+        this.cartService.saveCart(cart);
+
+        return "redirect:http://cart.gmall.com/addCart.html?skuId=" + cart.getSkuId() + "&count=" + cart.getCount();
+    }
+    @GetMapping("addCart.html")
+    public String addCart(Cart cart, Model model){
+
+        BigDecimal count = cart.getCount(); // 本次新增数量
+        // 根据skuId查询该用户的购物车记录
+        cart = this.cartService.queryCart(cart.getSkuId());// 从拦截器中获取的sku id
+        cart.setCount(count);
+
+        model.addAttribute("cart", cart);
+
+        return "addCart";
+    }
 
     @GetMapping("test")
     @ResponseBody
@@ -54,29 +81,5 @@ public class CartController {
         return "hello test!";*/
 //    }
 
-/*    @Autowired
-    private CartService cartService;
 
-    @GetMapping
-    public String saveCart(Cart cart){
-        // 新增购物车代码
-        this.cartService.saveCart(cart);
-
-        return "redirect:http://cart.gmall.com/addCart.html?skuId=" + cart.getSkuId() + "&count=" + cart.getCount();
-    }
-
-    @GetMapping("addCart.html")
-    public String addCart(Cart cart, Model model){
-
-        BigDecimal count = cart.getCount(); // 本次新增数量
-        // 根据skuId查询该用户的购物车记录
-        cart = this.cartService.queryCart(cart.getSkuId());
-        cart.setCount(count);
-
-        model.addAttribute("cart", cart);
-
-        return "addCart";
-    }
-
- */
 }
