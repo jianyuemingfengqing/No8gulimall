@@ -8,6 +8,7 @@ import com.learn.gmall.pms.service.SpuService;
 import com.learn.gmall.pms.vo.SpuVo;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
+import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
@@ -27,6 +28,8 @@ public class SpuController {
 
     @Resource
     private SpuService spuService;
+    @Resource
+    private RabbitTemplate rabbitTemplate;
 
     @PostMapping("json")
     @ApiOperation("分页查询")
@@ -74,6 +77,7 @@ public class SpuController {
     @PostMapping
     @ApiOperation("保存")
     public ResponseVo<Object> save(@RequestBody SpuVo spuVo) {
+        // 大保存
         spuService.bigSave(spuVo);
 
         return ResponseVo.ok();
@@ -85,7 +89,12 @@ public class SpuController {
     @PostMapping("/update")
     @ApiOperation("修改")
     public ResponseVo update(@RequestBody SpuEntity spu) {
+/*         todo 大更新
+        spuService.bigUpdate(spu);*/
+
         spuService.updateById(spu);
+        // 使用mq发送数据
+        this.rabbitTemplate.convertAndSend("PMS.SPU.EXCHANGE","item.update",spu.getId());
 
         return ResponseVo.ok();
     }

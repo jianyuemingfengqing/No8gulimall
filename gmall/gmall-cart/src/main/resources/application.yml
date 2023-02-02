@@ -39,6 +39,17 @@ spring:
       shutdown: # 关机时的操作
         await-termination: true # 等待异步任务处理完再关机
         await-termination-period: 60 # 等60s , 还没结束就强制关机
+  rabbitmq:
+    host: 192.168.176.128
+    port: 5672
+    virtual-host: /learn
+    username: lin
+    password: lin
+    listener:
+      simple:
+        acknowledge-mode: manual
+        prefetch: 1 #能者多劳
+        concurrency: 6 #消费
 mybatis-plus:
   global-config:
     db-config:
