@@ -47,7 +47,7 @@ public class CartController {
 
         return "cart"; // 返回结果集
     }
-
+// 更新
     @PostMapping("updateNum") // 数量
     @ResponseBody
     public ResponseVo updateNum(@RequestBody Cart cart){ //经过分析 只需要code, 所以不指定泛型

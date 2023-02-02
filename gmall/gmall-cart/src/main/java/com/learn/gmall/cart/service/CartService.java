@@ -168,7 +168,7 @@ public class CartService {
                     cartJson -> {
                         Cart cart = JSON.parseObject(cartJson.toString(), Cart.class);
                         // 查询购物车时，查询实时价格缓存
-//                        cart.setCurrentPrice(new BigDecimal(this.redisTemplate.opsForValue().get(PRICE_PREFIX + cart.getSkuId())));
+                        cart.setCurrentPrice(new BigDecimal(this.redisTemplate.opsForValue().get(PRICE_PREFIX + cart.getSkuId())));
                         return cart;
                     }
             ).collect(Collectors.toList());
@@ -219,7 +219,7 @@ public class CartService {
                     cartJson -> {
                         Cart cart = JSON.parseObject(cartJson.toString(), Cart.class);
                         // 查询购物车时查询实时价格缓存
-//                        cart.setCurrentPrice(new BigDecimal(this.redisTemplate.opsForValue().get(PRICE_PREFIX + cart.getSkuId())));
+                        cart.setCurrentPrice(new BigDecimal(this.redisTemplate.opsForValue().get(PRICE_PREFIX + cart.getSkuId())));
                         return cart;
                     }
             ).collect(Collectors.toList());
