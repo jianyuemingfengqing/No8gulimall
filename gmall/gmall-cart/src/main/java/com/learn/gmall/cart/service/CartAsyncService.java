@@ -25,8 +25,8 @@ public class CartAsyncService {
     }
 
     @Async
-    public void deleteCart(String userId) {
-        this.cartMapper.delete(new UpdateWrapper<Cart>().eq("user_id", userId));
+    public void deleteCart(String userKeyOrUserId) { // 传来的参数是 userKey或者是userId
+        this.cartMapper.delete(new UpdateWrapper<Cart>().eq("user_id", userKeyOrUserId));
     }
 
     @Async
