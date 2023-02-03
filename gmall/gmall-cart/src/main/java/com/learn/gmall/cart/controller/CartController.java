@@ -2,7 +2,6 @@ package com.learn.gmall.cart.controller;
 
 
 import com.learn.gmall.cart.interceptors.LoginInterceptor;
-import com.learn.gmall.cart.interceptors.LoginInterceptorTest;
 import com.learn.gmall.cart.pojo.Cart;
 import com.learn.gmall.cart.service.CartService;
 import com.learn.gmall.common.bean.ResponseVo;
@@ -69,7 +68,12 @@ public class CartController {
         this.cartService.deleteCartBySkuId(skuId);
         return ResponseVo.ok();
     }
-
+    @GetMapping("user/{userId}")
+    @ResponseBody
+    public ResponseVo<List<Cart>> queryCheckedCarts(@PathVariable("userId")Long userId){
+        List<Cart> carts = this.cartService.queryCheckedCarts(userId);
+        return ResponseVo.ok(carts);
+    }
     @GetMapping("test")
     @ResponseBody
     public String test(HttpServletRequest request) {

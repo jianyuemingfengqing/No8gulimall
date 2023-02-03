@@ -270,4 +270,18 @@ public class CartService {
             this.asyncService.updateCart(userId, skuId, cart); //更新mysql
         }
     }
+
+    public List<Cart> queryCheckedCarts(Long userId) {
+
+        BoundHashOperations<String, Object, Object> hashOps = this.redisTemplate.boundHashOps(KEY_PREFIX + userId);
+        List<Object> cartJsons = hashOps.values(); //获取购物车信息
+        if (CollectionUtils.isEmpty(cartJsons)){
+            return null;
+        }
+
+        return cartJsons.stream()
+                .map(cartJson -> JSON.parseObject(cartJson.toString(), Cart.class))
+                .filter(Cart::getCheck) // 获取被选择的
+                .collect(Collectors.toList());
+    }
 }
