@@ -94,7 +94,7 @@ public class CartService {
             List<ItemSaleVo> itemSaleVos = salesResponseVo.getData();
             cart.setSales(JSON.toJSONString(itemSaleVos));
 
-            this.asyncService.insertCart(cart);
+            this.asyncService.insertCart(userId,cart);
             // 加入实时价格缓存
             this.redisTemplate.opsForValue().set(PRICE_PREFIX + skuId, skuEntity.getPrice().toString());
         }
@@ -201,7 +201,7 @@ public class CartService {
                             // 不包含则新增记录
                             cart.setUserId(userId.toString());
                             cart.setId(null); // 为了防止主键冲突，把id设置为null, 让其自增
-                            this.asyncService.insertCart(cart);
+                            this.asyncService.insertCart(userId.toString(),cart);
                         }
                         loginHashOps.put(skuId, JSON.toJSONString(cart)); // 无论如何都要同步到redis中
                     }

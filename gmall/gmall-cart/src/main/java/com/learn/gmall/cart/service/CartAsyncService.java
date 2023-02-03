@@ -16,11 +16,12 @@ public class CartAsyncService {
 
     @Async
     public void updateCart(String userId, String skuId, Cart cart){
+//        int i = 1/0;  //使其redis成功 mysql失败
         this.cartMapper.update(cart, new UpdateWrapper<Cart>().eq("user_id", userId).eq("sku_id", skuId));
     }
 
     @Async
-    public void insertCart(Cart cart){
+    public void insertCart(String userId,Cart cart){
         this.cartMapper.insert(cart);
     }
 
