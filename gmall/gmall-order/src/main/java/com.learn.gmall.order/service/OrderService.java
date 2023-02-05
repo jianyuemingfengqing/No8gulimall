@@ -5,6 +5,7 @@ import com.baomidou.mybatisplus.core.toolkit.IdWorker;
 import com.learn.gmall.cart.pojo.Cart;
 import com.learn.gmall.common.bean.ResponseVo;
 import com.learn.gmall.common.exception.OrderException;
+import com.learn.gmall.oms.vo.OrderSubmitVo;
 import com.learn.gmall.order.feign.*;
 import com.learn.gmall.order.interceptors.LoginInterceptor;
 import com.learn.gmall.order.pojo.OrderConfirmVo;
@@ -120,4 +121,6 @@ public class OrderService {
         return confirmVo;
     }
 
+    public void submit(OrderSubmitVo submitVo) {
+    }
 }

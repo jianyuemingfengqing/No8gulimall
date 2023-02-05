@@ -6,6 +6,7 @@ import com.learn.gmall.common.bean.PageResultVo;
 import com.learn.gmall.common.bean.ResponseVo;
 import com.learn.gmall.wms.entity.WareSkuEntity;
 import com.learn.gmall.wms.service.WareSkuService;
+import com.learn.gmall.wms.vo.SkuLockVo;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,6 +29,12 @@ public class WareSkuController {
     @Autowired
     private WareSkuService wareSkuService;
 
+    @PostMapping("check/lock/{orderToken}")
+    public ResponseVo<List<SkuLockVo>> checkLock(@RequestBody List<SkuLockVo> lockVos, @PathVariable("orderToken")String orderToken){
+
+        List<SkuLockVo> skuLockVos = this.wareSkuService.checkLock(lockVos, orderToken);
+        return ResponseVo.ok(skuLockVos);
+    }
     /**
      * 列表
      */
