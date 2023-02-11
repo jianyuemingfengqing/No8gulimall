@@ -35,6 +35,12 @@ public class WareSkuController {
         List<SkuLockVo> skuLockVos = this.wareSkuService.checkLock(lockVos, orderToken);
         return ResponseVo.ok(skuLockVos);
     }
+    @GetMapping("/sku/{skuId}")
+    public ResponseVo<List<WareSkuEntity>> queryWareSkusBySkuId(@PathVariable("skuId")Long skuId){
+        List<WareSkuEntity> wareSkuEntities = this.wareSkuService.list(new QueryWrapper<WareSkuEntity>().eq("sku_id", skuId));
+        return ResponseVo.ok(wareSkuEntities);
+    }
+
     /**
      * 列表
      */

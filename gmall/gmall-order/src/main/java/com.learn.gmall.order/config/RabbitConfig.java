@@ -1,4 +1,4 @@
-package com.learn.gmall.oms.config;
+package com.learn.gmall.order.config;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.amqp.core.Binding;

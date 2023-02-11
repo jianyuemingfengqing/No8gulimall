@@ -2,7 +2,7 @@ package com.learn.gmall.order.pojo;
 
 import com.learn.gmall.ums.entity.UserAddressEntity;
 import lombok.Data;
-
+import com.learn.gmall.oms.vo.OrderItemVo;
 import java.util.List;
 
 @Data
