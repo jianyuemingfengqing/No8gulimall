@@ -124,7 +124,9 @@ public class OrderServiceImpl extends ServiceImpl<OrderMapper, OrderEntity> impl
 
             itemMapper.insert(orderItemEntity);
         });
-//        int i = 1/0;
+//        int i = 1/0;// 创建失败
+
+        // 超时
 //        try {
 //            TimeUnit.SECONDS.sleep(4);
 //        } catch (InterruptedException e) {

@@ -13,6 +13,7 @@ import com.learn.gmall.wms.service.WareSkuService;
 import com.learn.gmall.wms.vo.SkuLockVo;
 import org.redisson.api.RLock;
 import org.redisson.api.RedissonClient;
+import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.stereotype.Service;
@@ -32,6 +33,9 @@ public class WareSkuServiceImpl extends ServiceImpl<WareSkuMapper, WareSkuEntity
     private WareSkuMapper wareSkuMapper;
     @Autowired
     private StringRedisTemplate redisTemplate;
+
+    @Autowired
+    private RabbitTemplate rabbitTemplate;
     private static final String LOCK_PREFIX = "stock:lock:";
     private static final String KEY_PREFIX = "stock:info:";
 
@@ -75,7 +79,8 @@ public class WareSkuServiceImpl extends ServiceImpl<WareSkuMapper, WareSkuEntity
         // 为了方便将来减库存 或者 解锁库存，把锁定信息缓存到redis
         this.redisTemplate.opsForValue()
                 .set(KEY_PREFIX + orderToken, JSON.toJSONString(lockVos), 30, TimeUnit.HOURS);// 缓存时间, 到时间后关闭订单
-
+        // 为了方便将来定时解锁库存，发送延时消息
+        this.rabbitTemplate.convertAndSend("ORDER.EXCHANGE", "stock.ttl", orderToken);
         // 如果都锁定成功返回null
         return null;
     }
