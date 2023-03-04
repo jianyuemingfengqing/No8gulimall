@@ -37,41 +37,21 @@ public class RabbitConfig {
      */
 
     /**
-     * 延时队列：ORDER.TTL.QUEUE
+     * 延时队列：STOCK.TTL.QUEUE
      */
     @Bean
     public Queue ttlQueue(){
-        return QueueBuilder.durable("ORDER.TTL.QUEUE").ttl(90000)
-                .deadLetterExchange("ORDER.EXCHANGE").deadLetterRoutingKey("order.dead").build();
+        return QueueBuilder.durable("STOCK.TTL.QUEUE").ttl(100000)
+                .deadLetterExchange("ORDER.EXCHANGE").deadLetterRoutingKey("stock.unlock").build();
     }
 
     /**
-     * 把延时队列绑定到业务交换机：order.ttl (路由键)
+     * 把延时队列绑定到业务交换机：stock.ttl
      */
     @Bean
     public Binding ttlBinding(){
-        return new Binding("ORDER.TTL.QUEUE", Binding.DestinationType.QUEUE, "ORDER.EXCHANGE",
-                "order.ttl", null);
+        return new Binding("STOCK.TTL.QUEUE", Binding.DestinationType.QUEUE, "ORDER.EXCHANGE",
+                "stock.ttl", null);
     }
 
-    /**
-     * 死信交换机：ORDER.EXCHANGE
-     */
-
-    /**
-     * 死信队列：ORDER.DEAD.QUEUE
-     */
-    @Bean
-    public Queue deadQueue(){
-        return QueueBuilder.durable("ORDER.DEAD.QUEUE").build();
-    }
-
-    /**
-     * 把死信队列绑定到死信交换机：order.dead
-     */
-    @Bean
-    public Binding deadBinding(){
-        return new Binding("ORDER.DEAD.QUEUE", Binding.DestinationType.QUEUE, "ORDER.EXCHANGE",
-                "order.dead", null);
-    }
 }
